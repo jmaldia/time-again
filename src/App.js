@@ -11,7 +11,7 @@ class App extends Component {
           <h1 className="App-title">Time Again App</h1>
         </header>
         <p className="App-intro">
-          This is where the app will be. 
+          This is where the app will be. It will be a time saver. 
         </p>
       </div>
     );
