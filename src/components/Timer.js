@@ -1,10 +1,16 @@
-let counter = 0;
 let timer = 0;
 
 function myTime(minutes) {
-    while (minutes > 0) {
-        setInterval(() => {
-            timer++;
-        }, 1000);
+    let min = minutes;
+    while (min > 0) {
+        while (timer < 5) {
+            setInterval(() => {
+                timer++;
+            }, 1000);
+        }
+        min--;
+        console.log(`${min} minutes to go`);
     }
 }
+
+myTime(5);
