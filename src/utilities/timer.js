@@ -1,25 +1,27 @@
 let timer = 0;
 let counter;
 
-function myTime(repeatTimerCount) {
-    let countDown = repeatTimerCount;
+function myTime(minutes, repeatCount) {
+    let repeat = repeatCount;
+    let min = minutes;
 
-    console.log(`The timer will repeat ${countDown} more times`);
+    console.log(`The timer will repeat ${repeat} more times`);
 
     let countUp = setInterval(() => {
         timer++;
         console.log(timer);
 
-        if (timer === 6) {
+        if (timer === 60) {
             clearInterval(countUp);
             timer = 0;
-            countDown--;
-            if (countDown > 0) {
-                myTime(countDown);
+            repeat--;
+            min--;
+            if (repeat > 0) {
+                myTime(min, repeat);
             }
         }
     }, 1000);
 }
 
 
-myTime(5);
+myTime(1, 2);
