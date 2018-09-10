@@ -22,6 +22,3 @@ function myTime(minutes, repeatCount) {
         }
     }, 1000);
 }
-
-
-myTime(1, 2);

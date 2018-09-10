@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Time from './components/Time';
 
 class App extends Component {
   render() {
@@ -10,9 +11,8 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Time Again App</h1>
         </header>
-        <p className="App-intro">
-          This is where the app will be. It will be a time saver. 
-        </p>
+        
+        <Time />
       </div>
     );
   }
