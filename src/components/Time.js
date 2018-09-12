@@ -43,12 +43,16 @@ class Time extends React.Component {
                     if (this.state.repeat <= 0) {
                         clearInterval(this.interval);
                         this.setState({ 
+                            total: 0,
+                            timer: 0,
+                            minutes: 1,
+                            repeat: 1,
                             myAlert: true
                         });
                     }
                 } 
             // }
-        }, 100);
+        }, 1000);
     }
 
     addMinutes(min) {
