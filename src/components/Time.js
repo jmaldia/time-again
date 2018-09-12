@@ -51,11 +51,16 @@ class Time extends React.Component {
         }, 100);
     }
 
-    addRepeat() {
+    addMinutes(min) {
         this.setState({
-            repeat: 2
+            minutes: min
         });
-        this.startTimer();
+    }
+
+    addRepeat(num) {
+        this.setState({
+            repeat: num
+        });
     }
     
     render() {
@@ -65,10 +70,36 @@ class Time extends React.Component {
                 <h1>
                     {Math.floor(this.state.timer / 60) < 10 ? '0' : ''}{Math.floor(this.state.timer / 60)}:{this.state.timer % 60 < 10 ? '0' : ''}{this.state.timer % 60}
                 </h1>
-                <p>
-                    {Math.floor(this.state.total / 60) < 10 ? '0' : ''}{Math.floor(this.state.total / 60)}:{this.state.total % 60 < 10 ? '0' : ''}{this.state.total % 60}
-                </p>
-                <button onClick={this.addRepeat}>Repeat 2X</button>
+
+                <div>
+                    <h3>Total minutes</h3>
+                    <p>
+                        {Math.floor(this.state.total / 60) < 10 ? '0' : ''}{Math.floor(this.state.total / 60)}:{this.state.total % 60 < 10 ? '0' : ''}{this.state.total % 60}
+                    </p>
+                </div>
+
+                <div>
+                    <h3>How many minutes per interval?</h3>
+                    <button onClick={() => this.addMinutes(1)}>1 Minute</button>
+                    <button onClick={() => this.addMinutes(5)}>5 Minutes</button>
+                    <button onClick={() => this.addMinutes(10)}>10 Minutes</button>
+                    <button onClick={() => this.addMinutes(15)}>15 Minutes</button>
+                    <button onClick={() => this.addMinutes(30)}>30 Minutes</button>
+                </div>
+
+                <div>
+                    <h3>How many times to repeat?</h3>
+                    <button onClick={() => this.addRepeat(1)}>Repeat 1X</button>
+                    <button onClick={() => this.addRepeat(2)}>Repeat 2X</button>
+                    <button onClick={() => this.addRepeat(3)}>Repeat 3X</button>
+                    <button onClick={() => this.addRepeat(5)}>Repeat 5X</button>
+                    <button onClick={() => this.addRepeat(10)}>Repeat 10X</button>
+                </div>
+
+                <div>
+                    <br></br><button onClick={this.startTimer}>Start</button>
+                </div>
+                
                 {this.state.myAlert ? <p>Timer Done</p> : ''}
             </div>
         )
