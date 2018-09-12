@@ -15,6 +15,7 @@ class Time extends React.Component {
 
         this.startTimer = this.startTimer.bind(this);
         this.addRepeat = this.addRepeat.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
     
     componentDidMount() {
@@ -25,7 +26,14 @@ class Time extends React.Component {
         clearInterval(this.interval);
     }
 
-    startTimer () {
+    startTimer(event) {
+        event.preventDefault();
+        
+        this.setState({ 
+            total: 0,
+            timer: 0
+        })
+
         this.interval = setInterval(() => {
             this.setState({ timer: this.state.timer + 1 });
             this.setState({ total: this.state.total + 1 });
@@ -62,6 +70,14 @@ class Time extends React.Component {
     addRepeat(event) {
         this.setState({ repeat: event.target.value });
     }
+
+    handleChange(event) {
+        const name = event.target.name;
+
+        this.setState({ 
+            [name]: event.target.value
+        });
+    }
     
     render() {
         return (
@@ -88,7 +104,12 @@ class Time extends React.Component {
                         <button onClick={() => this.addMinutes(15)}>15 Minutes</button>
                         <button onClick={() => this.addMinutes(30)}>30 Minutes</button>
                         */}
-                        <input type="text" value={this.state.minutes} onChange={this.addMinutes} />
+                        <input 
+                            name="minutes"
+                            type="text" 
+                            value={this.state.minutes}
+                            onChange={this.handleChange} 
+                        />
                     </div>
 
                     <div>
@@ -99,7 +120,12 @@ class Time extends React.Component {
                         <button onClick={() => this.addRepeat(3)}>Repeat 3X</button>
                         <button onClick={() => this.addRepeat(5)}>Repeat 5X</button>
                         */}
-                        <input type="text" value={this.state.repeat} onChange={this.addRepeat} />
+                        <input 
+                            name="repeat"
+                            type="text" 
+                            value={this.state.repeat} 
+                            onChange={this.handleChange} 
+                        />
                     </div>
 
                     <div>
