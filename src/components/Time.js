@@ -8,13 +8,14 @@ class Time extends React.Component {
         this.state = { 
             total: 0,
             timer: 0,
-            minutes: 2,
+            minutes: 1,
             repeat: 1,
             myAlert: false
         };
 
         this.startTimer = this.startTimer.bind(this);
         this.addRepeat = this.addRepeat.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
     
     componentDidMount() {
@@ -25,7 +26,14 @@ class Time extends React.Component {
         clearInterval(this.interval);
     }
 
-    startTimer () {
+    startTimer(event) {
+        event.preventDefault();
+
+        this.setState({ 
+            total: 0,
+            timer: 0
+        })
+
         this.interval = setInterval(() => {
             this.setState({ timer: this.state.timer + 1 });
             this.setState({ total: this.state.total + 1 });
@@ -43,10 +51,6 @@ class Time extends React.Component {
                     if (this.state.repeat <= 0) {
                         clearInterval(this.interval);
                         this.setState({ 
-                            total: 0,
-                            timer: 0,
-                            minutes: 1,
-                            repeat: 1,
                             myAlert: true
                         });
                     }
@@ -55,22 +59,31 @@ class Time extends React.Component {
         }, 1000);
     }
 
-    addMinutes(min) {
-        this.setState({
-            minutes: min
-        });
+    addMinutes(event) {
+        this.setState({ minutes: event.target.value });
     }
 
-    addRepeat(num) {
-        this.setState({
-            repeat: num
+    addRepeat(event) {
+        this.setState({ repeat: event.target.value });
+    }
+
+    handleChange(event) {
+        const name = event.target.name;
+
+        this.setState({ 
+            [name]: event.target.value
         });
     }
     
     render() {
         return (
             <div>
-                <p>The timer will repeat {this.state.repeat} more { this.state.repeat === 1 ? 'time' : 'times' }</p>
+                <h3>
+                    Interval Length: {this.state.minutes} minute(s)<br></br>
+                    Repeat(s): {this.state.repeat}<br></br>
+                    Repeat(s) remaining: { this.state.repeat - 1 > 0 ? this.state.repeat - 1 : 0 }
+                </h3>
+
                 <h1>
                     {Math.floor(this.state.timer / 60) < 10 ? '0' : ''}{Math.floor(this.state.timer / 60)}:{this.state.timer % 60 < 10 ? '0' : ''}{this.state.timer % 60}
                 </h1>
@@ -81,28 +94,45 @@ class Time extends React.Component {
                         {Math.floor(this.state.total / 60) < 10 ? '0' : ''}{Math.floor(this.state.total / 60)}:{this.state.total % 60 < 10 ? '0' : ''}{this.state.total % 60}
                     </p>
                 </div>
+                
+                <form onSubmit={this.startTimer}>
+                    <div>
+                        <h3>How many minutes per interval?</h3>
+                        {/*
+                        <button onClick={() => this.addMinutes(1)}>1 Minute</button>
+                        <button onClick={() => this.addMinutes(5)}>5 Minutes</button>
+                        <button onClick={() => this.addMinutes(10)}>10 Minutes</button>
+                        <button onClick={() => this.addMinutes(15)}>15 Minutes</button>
+                        <button onClick={() => this.addMinutes(30)}>30 Minutes</button>
+                        */}
+                        <input 
+                            name="minutes"
+                            type="text" 
+                            value={this.state.minutes}
+                            onChange={this.handleChange} 
+                        />
+                    </div>
 
-                <div>
-                    <h3>How many minutes per interval?</h3>
-                    <button onClick={() => this.addMinutes(1)}>1 Minute</button>
-                    <button onClick={() => this.addMinutes(5)}>5 Minutes</button>
-                    <button onClick={() => this.addMinutes(10)}>10 Minutes</button>
-                    <button onClick={() => this.addMinutes(15)}>15 Minutes</button>
-                    <button onClick={() => this.addMinutes(30)}>30 Minutes</button>
-                </div>
+                    <div>
+                        <h3>How many times to repeat?</h3>
+                        {/*
+                        <button onClick={() => this.addRepeat(1)}>Repeat 1X</button>
+                        <button onClick={() => this.addRepeat(2)}>Repeat 2X</button>
+                        <button onClick={() => this.addRepeat(3)}>Repeat 3X</button>
+                        <button onClick={() => this.addRepeat(5)}>Repeat 5X</button>
+                        */}
+                        <input 
+                            name="repeat"
+                            type="text" 
+                            value={this.state.repeat} 
+                            onChange={this.handleChange} 
+                        />
+                    </div>
 
-                <div>
-                    <h3>How many times to repeat?</h3>
-                    <button onClick={() => this.addRepeat(1)}>Repeat 1X</button>
-                    <button onClick={() => this.addRepeat(2)}>Repeat 2X</button>
-                    <button onClick={() => this.addRepeat(3)}>Repeat 3X</button>
-                    <button onClick={() => this.addRepeat(5)}>Repeat 5X</button>
-                    <button onClick={() => this.addRepeat(10)}>Repeat 10X</button>
-                </div>
-
-                <div>
-                    <br></br><button onClick={this.startTimer}>Start</button>
-                </div>
+                    <div>
+                        <br></br><input type="submit" value="Start"></input>
+                    </div>
+                </form>
                 
                 {this.state.myAlert ? <p>Timer Done</p> : ''}
             </div>
