@@ -28,7 +28,7 @@ class Time extends React.Component {
 
     startTimer(event) {
         event.preventDefault();
-        
+
         this.setState({ 
             total: 0,
             timer: 0
@@ -51,10 +51,6 @@ class Time extends React.Component {
                     if (this.state.repeat <= 0) {
                         clearInterval(this.interval);
                         this.setState({ 
-                            total: 0,
-                            timer: 0,
-                            minutes: 1,
-                            repeat: 1,
                             myAlert: true
                         });
                     }
@@ -82,7 +78,12 @@ class Time extends React.Component {
     render() {
         return (
             <div>
-                <p>This {this.state.minutes} minute timer will repeat {this.state.repeat} { this.state.repeat === 1 ? 'time' : 'times' }</p>
+                <h3>
+                    Interval Length: {this.state.minutes} minute(s)<br></br>
+                    Repeat(s): {this.state.repeat}<br></br>
+                    Repeat(s) remaining: { this.state.repeat - 1 > 0 ? this.state.repeat - 1 : 0 }
+                </h3>
+
                 <h1>
                     {Math.floor(this.state.timer / 60) < 10 ? '0' : ''}{Math.floor(this.state.timer / 60)}:{this.state.timer % 60 < 10 ? '0' : ''}{this.state.timer % 60}
                 </h1>
