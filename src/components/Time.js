@@ -14,7 +14,6 @@ class Time extends React.Component {
         };
 
         this.startTimer = this.startTimer.bind(this);
-        this.addRepeat = this.addRepeat.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
     
@@ -29,42 +28,36 @@ class Time extends React.Component {
     startTimer(event) {
         event.preventDefault();
 
-        this.setState({ 
-            total: 0,
-            timer: 0
-        })
+        if (this.state.repeat > 0) {
+            this.setState({ 
+                total: 0,
+                timer: 0
+            })
 
-        this.interval = setInterval(() => {
-            this.setState({ timer: this.state.timer + 1 });
-            this.setState({ total: this.state.total + 1 });
+            this.interval = setInterval(() => {
+                this.setState({ timer: this.state.timer + 1 });
+                this.setState({ total: this.state.total + 1 });
 
-            // if (this.state.minutes * 60 > 0) {
-                if (this.state.timer === this.state.minutes * 60) {
-                    this.setState({ 
-                        timer: 0,
-                        // minutes: this.state.minutes - 1,
-                        repeat: this.state.repeat - 1,
-                        myAlert: false
-                    });
-                    console.log(this.state.total);
-
-                    if (this.state.repeat <= 0) {
-                        clearInterval(this.interval);
+                // if (this.state.minutes * 60 > 0) {
+                    if (this.state.timer === this.state.minutes * 60) {
                         this.setState({ 
-                            myAlert: true
+                            timer: 0,
+                            // minutes: this.state.minutes - 1,
+                            repeat: this.state.repeat - 1,
+                            myAlert: false
                         });
-                    }
-                } 
-            // }
-        }, 1000);
-    }
+                        console.log(this.state.total);
 
-    addMinutes(event) {
-        this.setState({ minutes: event.target.value });
-    }
-
-    addRepeat(event) {
-        this.setState({ repeat: event.target.value });
+                        if (this.state.repeat <= 0) {
+                            clearInterval(this.interval);
+                            this.setState({ 
+                                myAlert: true
+                            });
+                        }
+                    } 
+                // }
+            }, 1000);
+        }
     }
 
     handleChange(event) {
